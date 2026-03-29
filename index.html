@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flipkart Resolver</title>
+
+<style>
+body {
+font-family: Arial;
+background: #0f172a;
+color: white;
+padding: 20px;
+}
+
+textarea {
+width: 100%;
+height: 120px;
+margin: 10px 0;
+padding: 10px;
+}
+
+button {
+padding: 10px;
+margin: 5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Flipkart Resolver</h2>
+
+<textarea id="input" placeholder="Paste affiliate link"></textarea>
+
+<textarea id="output" placeholder="Result"></textarea>
+
+<br>
+
+<button onclick="resolve()">Resolve</button>
+<button onclick="copy()">Copy</button>
+<button onclick="openLink()">Open</button>
+
+<script>
+
+let finalLink = "";
+
+async function resolve(){
+
+const url = document.getElementById("input").value;
+
+const res = await fetch("/resolve", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({ url })
+});
+
+const data = await res.json();
+
+finalLink = data.convertedUrl;
+
+document.getElementById("output").value = finalLink;
+
+}
+
+function copy(){
+navigator.clipboard.writeText(finalLink);
+}
+
+function openLink(){
+window.open(finalLink);
+}
+
+</script>
+
+</body>
+</html>
