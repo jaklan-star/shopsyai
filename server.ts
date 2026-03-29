@@ -26,7 +26,6 @@ async function startServer() {
           '--disable-accelerated-2d-canvas',
           '--no-first-run',
           '--no-zygote',
-          '--single-process', // <- this one doesn't works in Windows
           '--disable-gpu'
         ]
       });
@@ -38,13 +37,12 @@ async function startServer() {
       let finalUrl = url;
       
       try {
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-        
+await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });        
         // Wait for URL to stabilize
         let previousUrl = page.url();
         let stableCount = 0;
         
-        for (let i = 0; i < 30; i++) { // Max 15 seconds (30 * 500ms)
+        for (let i = 0; i < 40; i++) { // Max 15 seconds (30 * 500ms)
           await new Promise(r => setTimeout(r, 500));
           const currentUrl = page.url();
           if (currentUrl === previousUrl) {
