@@ -1,0 +1,5 @@
+{
+  "name": "Flipkart to Shopsy Converter",
+  "description": "Resolves affiliate links and converts Flipkart URLs to Shopsy URLs",
+  "requestFramePermissions": []
+}
