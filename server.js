@@ -1,4 +1,3 @@
-
 const express = require("express");
 const puppeteer = require("puppeteer");
 const path = require("path");
@@ -46,7 +45,10 @@ app.post("/resolve", async (req, res) => {
 
     const finalUrl = page.url();
 
-    const convertedUrl = finalUrl.replace(/(?:dl\.)?flipkart\.com/g, "shopsy.in");
+    const convertedUrl = finalUrl.replace(
+      /(?:dl\.)?flipkart\.com/g,
+      "shopsy.in"
+    );
 
     res.json({
       finalUrl,
@@ -62,8 +64,12 @@ app.post("/resolve", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Server running");
+  console.log("Server running on port " + PORT);
 });
